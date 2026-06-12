@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Summarizer | Medical Research Assistant</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header>
+        <div class="nav-container">
+            <div class="logo" onclick="window.location.href='/'">
+                🩺 Medical RAG Assistant
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/">Dashboard</a></li>
+                    <li><a href="/chat.html">Chat</a></li>
+                    <li><a href="/summary.html" class="active">Summary</a></li>
+                    <li><a href="/search.html">Search</a></li>
+                    <li><a href="/analytics.html">Analytics</a></li>
+                    <li><a href="/evaluation.html">Evaluation</a></li>
+                    <li><a href="/graph.html">Knowledge Graph</a></li>
+                    <li><a href="/about.html">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="flex-between">
+            <h1>Medical Research Summarizer</h1>
+            <div id="export-controls" style="display: none; gap: 0.5rem;">
+                <button class="btn btn-secondary" onclick="exportSummary('txt')">📄 Export TXT</button>
+                <button class="btn btn-secondary" onclick="exportSummary('pdf')">📕 Export PDF</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Select Research Topic</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+                Synthesize literature context for a disease or medical condition. The model will summarize details under strict clinical parameters.
+            </p>
+            <div style="display: flex; gap: 1rem;">
+                <input type="text" id="topic-input" class="input-field" placeholder="Enter topic (e.g., 'Alzheimer\'s Symptoms', 'COPD Treatments')" onkeydown="if(event.key==='Enter') generateSummary()">
+                <button class="btn btn-primary" onclick="generateSummary()" id="generate-btn">Generate Summary</button>
+            </div>
+            <div id="loading" class="loading-indicator" style="display: none; margin-top: 1rem;">
+                <div class="spinner"></div>
+                <span>Scanning medical corpus and formatting summary blocks...</span>
+            </div>
+        </div>
+
+        <!-- Summary Output Blocks -->
+        <div id="summary-result" style="display: none;">
+            <div class="card">
+                <h2 id="summary-title" style="color: var(--accent-blue);">Research Summary: Topic</h2>
+                <div class="summary-output">
+                    <div class="summary-block">
+                        <h3>Overview</h3>
+                        <p id="sum-overview">Loading overview...</p>
+                    </div>
+                    <div class="summary-block">
+                        <h3>Key Findings</h3>
+                        <p id="sum-findings">Loading key findings...</p>
+                    </div>
+                    <div class="summary-block">
+                        <h3>Risk Factors</h3>
+                        <p id="sum-risks">Loading risk factors...</p>
+                    </div>
+                    <div class="summary-block">
+                        <h3>Treatments & Medications</h3>
+                        <p id="sum-treatments">Loading treatments...</p>
+                    </div>
+                    <div class="summary-block">
+                        <h3>Research Gaps</h3>
+                        <p id="sum-gaps">Loading research gaps...</p>
+                    </div>
+                    <div class="summary-block">
+                        <h3>Future Directions</h3>
+                        <p id="sum-directions">Loading future directions...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="/static/js/summary.js"></script>
+</body>
+</html>

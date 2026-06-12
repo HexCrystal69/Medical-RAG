@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAG Evaluation | Medical Research Assistant</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header>
+        <div class="nav-container">
+            <div class="logo" onclick="window.location.href='/'">
+                🩺 Medical RAG Assistant
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/">Dashboard</a></li>
+                    <li><a href="/chat.html">Chat</a></li>
+                    <li><a href="/summary.html">Summary</a></li>
+                    <li><a href="/search.html">Search</a></li>
+                    <li><a href="/analytics.html">Analytics</a></li>
+                    <li><a href="/evaluation.html" class="active">Evaluation</a></li>
+                    <li><a href="/graph.html">Knowledge Graph</a></li>
+                    <li><a href="/about.html">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <h1>RAGAS Pipeline Evaluation Center</h1>
+
+        <!-- Controls Card -->
+        <div class="card">
+            <h2>Benchmark Testing Control Center</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+                Run automated clinical benchmark checks. This will generate queries from indexed contexts, execute RAG pipeline runs, and score output quality on local LLM-as-a-judge metrics.
+            </p>
+            <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+                <div>
+                    <span class="form-label" style="display: inline-block; margin-right: 0.5rem;">Test Set Size:</span>
+                    <input type="number" id="test-size-input" min="1" max="15" value="3" class="input-field" style="width: 80px; display: inline-block;">
+                </div>
+                <button class="btn btn-secondary" onclick="generateBenchmarkQuestions()" id="gen-questions-btn">
+                    1. Generate Test Cases
+                </button>
+                <button class="btn btn-primary" onclick="runBenchmark()" id="run-eval-btn" disabled>
+                    2. Run Quality Checks
+                </button>
+            </div>
+            <div id="loading" class="loading-indicator" style="display: none; margin-top: 1.5rem;">
+                <div class="spinner"></div>
+                <span id="loading-status-text">Generating benchmark dataset...</span>
+            </div>
+        </div>
+
+        <!-- Generated dataset showcase -->
+        <div id="test-cases-card" class="card" style="display: none;">
+            <h2>Prepared Benchmark Test Cases</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.9rem;">
+                The following queries were dynamically generated from medical documents. Review them before running checks:
+            </p>
+            <div style="overflow-x: auto;">
+                <table class="med-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 50px;">#</th>
+                            <th>Query</th>
+                            <th>Reference Document</th>
+                        </tr>
+                    </thead>
+                    <tbody id="test-cases-body">
+                        <!-- Loaded dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Result Stats Blocks -->
+        <div id="eval-summary-card" class="card" style="display: none;">
+            <div class="flex-between">
+                <h2>Test Run Results Summary</h2>
+                <div style="display: flex; gap: 0.5rem;">
+                    <button class="btn btn-secondary" id="export-txt-btn" style="padding: 0.5rem 1rem;">Export TXT</button>
+                    <button class="btn btn-secondary" id="export-pdf-btn" style="padding: 0.5rem 1rem;">Export PDF</button>
+                </div>
+            </div>
+            <div class="stats-container">
+                <div class="stat-box">
+                    <div class="stat-val" id="eval-overall">0.00</div>
+                    <div class="stat-label">Overall Score</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-val" id="eval-faithfulness" style="color: var(--accent-blue);">0.00</div>
+                    <div class="stat-label">Faithfulness</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-val" id="eval-relevancy" style="color: var(--accent-purple);">0.00</div>
+                    <div class="stat-label">Answer Relevancy</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-val" id="eval-precision" style="color: var(--green-success);">0.00</div>
+                    <div class="stat-label">Context Precision</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-val" id="eval-recall" style="color: var(--yellow-warning);">0.00</div>
+                    <div class="stat-label">Context Recall</div>
+                </div>
+            </div>
+
+            <!-- Query detail results -->
+            <div id="eval-details-container" style="display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem;">
+                <!-- Dynamically loaded detail boxes -->
+            </div>
+        </div>
+
+        <!-- Historical Runs -->
+        <div class="card">
+            <h2>Historical Quality Benchmarks</h2>
+            <div style="overflow-x: auto;">
+                <table class="med-table">
+                    <thead>
+                        <tr>
+                            <th>Timestamp</th>
+                            <th>Overall Score</th>
+                            <th>Faithfulness</th>
+                            <th>Relevancy</th>
+                            <th>Precision</th>
+                            <th>Recall</th>
+                            <th>Reports</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-body">
+                        <!-- Loaded dynamically -->
+                        <tr>
+                            <td colspan="7" style="text-align: center; color: var(--text-muted);">No evaluation history available. Run checks above.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script src="/static/js/evaluation.js"></script>
+</body>
+</html>

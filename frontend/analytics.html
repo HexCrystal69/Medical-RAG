@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics Dashboard | Medical Research Assistant</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <div class="nav-container">
+            <div class="logo" onclick="window.location.href='/'">
+                🩺 Medical RAG Assistant
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/">Dashboard</a></li>
+                    <li><a href="/chat.html">Chat</a></li>
+                    <li><a href="/summary.html">Summary</a></li>
+                    <li><a href="/search.html">Search</a></li>
+                    <li><a href="/analytics.html" class="active">Analytics</a></li>
+                    <li><a href="/evaluation.html">Evaluation</a></li>
+                    <li><a href="/graph.html">Knowledge Graph</a></li>
+                    <li><a href="/about.html">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <h1>System Analytics & Usage Dashboard</h1>
+
+        <!-- High Level Stats Blocks -->
+        <div class="stats-container">
+            <div class="stat-box">
+                <div class="stat-val" id="stat-total-queries">0</div>
+                <div class="stat-label">Total Queries</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-val" id="stat-retrieval-lat">0.00s</div>
+                <div class="stat-label">Avg Retrieval Latency</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-val" id="stat-total-lat">0.00s</div>
+                <div class="stat-label">Avg Total Latency</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-val" id="stat-success-rate">100%</div>
+                <div class="stat-label">Retrieval Success Rate</div>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <!-- Charts Column -->
+            <div class="left-col">
+                <div class="card">
+                    <h2>Latency Breakdown (Retrieval vs. Generation)</h2>
+                    <div style="position: relative; height: 300px; width: 100%;">
+                        <canvas id="latencyChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>Retrieval Strategy Distribution</h2>
+                    <div style="position: relative; height: 300px; width: 100%;">
+                        <canvas id="strategyChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats/Tables Column -->
+            <div class="right-col">
+                <div class="card">
+                    <h2>Most Referenced Literature</h2>
+                    <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1rem;">
+                        Document citation frequencies during active pipeline queries:
+                    </p>
+                    <div id="ref-docs-list">
+                        <!-- Loaded dynamically -->
+                        <div style="color: var(--text-muted); text-align: center; padding: 2rem;">No reference history logged yet.</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>Top Searched Medical Topics</h2>
+                    <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1rem;">
+                        Topics automatically classified from user question logs:
+                    </p>
+                    <div id="topics-list">
+                        <!-- Loaded dynamically -->
+                        <div style="color: var(--text-muted); text-align: center; padding: 2rem;">No topic search history logged yet.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="/static/js/analytics.js"></script>
+</body>
+</html>

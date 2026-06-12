@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Interface | Medical Research Assistant</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header>
+        <div class="nav-container">
+            <div class="logo" onclick="window.location.href='/'">
+                🩺 Medical RAG Assistant
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/">Dashboard</a></li>
+                    <li><a href="/chat.html" class="active">Chat</a></li>
+                    <li><a href="/summary.html">Summary</a></li>
+                    <li><a href="/search.html">Search</a></li>
+                    <li><a href="/analytics.html">Analytics</a></li>
+                    <li><a href="/evaluation.html">Evaluation</a></li>
+                    <li><a href="/graph.html">Knowledge Graph</a></li>
+                    <li><a href="/about.html">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="flex-between">
+            <h1>Interactive Medical Chat</h1>
+            <div style="display: flex; gap: 0.5rem;">
+                <button class="btn btn-secondary" onclick="exportConversation('txt')">📄 Export TXT</button>
+                <button class="btn btn-secondary" onclick="exportConversation('pdf')">📕 Export PDF</button>
+                <button class="btn btn-danger" onclick="clearHistory()">🧹 Clear Chat</button>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <!-- Left Panel: Chat area -->
+            <div class="left-col">
+                <div class="card" style="margin-bottom: 0;">
+                    <!-- Strategy Selection -->
+                    <div style="margin-bottom: 1rem;">
+                        <span class="form-label">Retrieval Search Strategy</span>
+                        <div class="strategy-selectors" id="strategy-bar">
+                            <div class="strategy-badge active" data-strategy="hybrid">Hybrid Search (RRF)</div>
+                            <div class="strategy-badge" data-strategy="vector">Semantic Vector (FAISS)</div>
+                            <div class="strategy-badge" data-strategy="bm25">Keyword Search (BM25)</div>
+                        </div>
+                    </div>
+
+                    <div class="chat-container">
+                        <div class="chat-messages" id="chat-box">
+                            <div class="message message-assistant">
+                                Hello, I am your Medical Literature Assistant. Ask me research questions, and I will search the indexed medical papers to formulate grounded answers with citations.
+                            </div>
+                        </div>
+
+                        <!-- Typing loader -->
+                        <div id="loading" class="loading-indicator" style="display: none; padding: 0.5rem; margin-bottom: 0.5rem;">
+                            <div class="spinner"></div>
+                            <span id="loading-text">Synthesizing clinical response...</span>
+                        </div>
+
+                        <!-- Input area -->
+                        <div style="display: flex; gap: 0.75rem;">
+                            <input type="text" id="query-input" class="input-field" placeholder="Ask a medical question (e.g., 'What is Type 2 Diabetes?')" onkeydown="if(event.key==='Enter') sendQuery()">
+                            <button class="btn btn-primary" onclick="sendQuery()">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Panel: Active Citation View -->
+            <div class="right-col">
+                <div class="card" style="height: 100%; min-height: 550px;">
+                    <h2>Source Citations</h2>
+                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.9rem;">
+                        Detailed document matches and similarity scores for the last query:
+                    </p>
+                    <div id="citations-panel" style="display: flex; flex-direction: column; gap: 1rem;">
+                        <div style="text-align: center; color: var(--text-muted); padding-top: 3rem;">
+                            Ask a question to see retrieved references.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="/static/js/chat.js"></script>
+</body>
+</html>

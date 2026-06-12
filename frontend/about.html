@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | Medical Research Assistant</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        .stack-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        .stack-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+        }
+        .stack-item strong {
+            display: block;
+            margin-bottom: 0.25rem;
+            color: var(--accent-blue);
+        }
+        .flow-step {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-light);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .step-num {
+            background: var(--accent-gradient);
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="nav-container">
+            <div class="logo" onclick="window.location.href='/'">
+                🩺 Medical RAG Assistant
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/">Dashboard</a></li>
+                    <li><a href="/chat.html">Chat</a></li>
+                    <li><a href="/summary.html">Summary</a></li>
+                    <li><a href="/search.html">Search</a></li>
+                    <li><a href="/analytics.html">Analytics</a></li>
+                    <li><a href="/evaluation.html">Evaluation</a></li>
+                    <li><a href="/graph.html">Knowledge Graph</a></li>
+                    <li><a href="/about.html" class="active">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <h1>About the System & Architecture</h1>
+
+        <div class="card">
+            <h2>Project Overview</h2>
+            <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1rem;">
+                The <strong>Medical Research Assistant</strong> is a portfolio-grade, production-ready Full Stack AI Application designed to index and query medical literature. The application utilizes a hybrid retrieval framework combining vector similarity and keyword search, grounded checks to prevent hallucinations, and structured outputs for research summarization, clinical entity parsing, and quality evaluations.
+            </p>
+            <p style="color: var(--text-secondary); line-height: 1.6;">
+                By hosting both search indexing (FAISS and local BM25) and inference generation (Ollama Qwen3) 100% locally, this pipeline guarantees complete data privacy—a crucial compliance requirement for medical diagnostics and clinical research.
+            </p>
+        </div>
+
+        <div class="card">
+            <h2>RAG Pipeline Flow</h2>
+            <div style="margin-top: 1rem;">
+                <div class="flow-step">
+                    <div class="step-num">1</div>
+                    <div>
+                        <strong>Document Loading & Chunking:</strong>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.1rem;">PDF documents are parsed, enriched with file metadata, and split into 600-character blocks with 150-character overlap.</p>
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-num">2</div>
+                    <div>
+                        <strong>Hybrid Index Retrieval:</strong>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.1rem;">Input queries retrieve matching segments concurrently from FAISS (vector similarity) and BM25 (keyword frequency).</p>
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-num">3</div>
+                    <div>
+                        <strong>Reciprocal Rank Fusion (RRF):</strong>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.1rem;">Retrieval segments are consolidated and re-ranked using an RRF algorithm (constant c=60).</p>
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-num">4</div>
+                    <div>
+                        <strong>Cross-Encoder Re-Ranking:</strong>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.1rem;">The top consolidated segments are scored against the query using a Cross-Encoder transformer model to prioritize core evidence.</p>
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-num">5</div>
+                    <div>
+                        <strong>Grounded Answer Synthesis:</strong>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.1rem;">Qwen3 synthesizes a structured answer, citing specific source PDFs and page numbers. Fallback triggers if confidence is below 0.60.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Core Technology Stack</h2>
+            <div class="stack-list">
+                <div class="stack-item">
+                    <strong>Frontend UI</strong>
+                    <span style="font-size: 0.9rem; color: var(--text-secondary);">HTML5, Vanilla CSS, JS Canvas</span>
+                </div>
+                <div class="stack-item">
+                    <strong>Backend Web Server</strong>
+                    <span style="font-size: 0.9rem; color: var(--text-secondary);">FastAPI, Python</span>
+                </div>
+                <div class="stack-item">
+                    <strong>Semantic Vector Index</strong>
+                    <span style="font-size: 0.9rem; color: var(--text-secondary);">FAISS DB, LangChain</span>
+                </div>
+                <div class="stack-item">
+                    <strong>Embedding Model</strong>
+                    <span style="font-size: 0.9rem; color: var(--text-secondary);">BAAI/bge-large-en-v1.5</span>
+                </div>
+                <div class="stack-item">
+                    <strong>Re-ranker Model</strong>
+                    <span style="font-size: 0.9rem; color: var(--text-secondary);">ms-marco-MiniLM-L-6-v2</span>
+                </div>
+                <div class="stack-item">
+                    <strong>Language Model</strong>
+                    <span style="font-size: 0.9rem; color: var(--text-secondary);">Qwen3 via Ollama</span>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

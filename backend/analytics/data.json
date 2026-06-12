@@ -1,0 +1,53 @@
+[
+    {
+        "timestamp": "2026-06-12 18:03:15",
+        "query": "What is the capital of india",
+        "retrieval_time": 0.2899,
+        "inference_time": 8.4327,
+        "total_time": 8.7226,
+        "referenced_docs": [
+            "FA3Mu03lXEchkVY.pdf",
+            "Global-Atlas-on-cardiovascular-disease-prevention-and-control.pdf"
+        ],
+        "success": true,
+        "strategy": "hybrid"
+    },
+    {
+        "timestamp": "2026-06-12 18:03:43",
+        "query": "Describe Diabetes",
+        "retrieval_time": 0.0225,
+        "inference_time": 9.2484,
+        "total_time": 9.2709,
+        "referenced_docs": [
+            "DIABETES.pdf"
+        ],
+        "success": true,
+        "strategy": "hybrid"
+    },
+    {
+        "timestamp": "2026-06-12 18:08:13",
+        "query": "Describe Alzheimer",
+        "retrieval_time": 0.0204,
+        "inference_time": 10.442,
+        "total_time": 10.4624,
+        "referenced_docs": [
+            "FA3Mu03lXEchkVY.pdf",
+            "IJCRT2510639.pdf"
+        ],
+        "success": true,
+        "strategy": "hybrid"
+    },
+    {
+        "timestamp": "2026-06-12 18:09:30",
+        "query": "Symptoms of Alzheimer",
+        "retrieval_time": 0.0204,
+        "inference_time": 13.4821,
+        "total_time": 13.5026,
+        "referenced_docs": [
+            "FA3Mu03lXEchkVY.pdf",
+            "IJCRT2510639.pdf"
+        ],
+        "success": true,
+        "strategy": "vector"
+    }
+]

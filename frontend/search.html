@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Literature Search | Medical Research Assistant</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header>
+        <div class="nav-container">
+            <div class="logo" onclick="window.location.href='/'">
+                🩺 Medical RAG Assistant
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/">Dashboard</a></li>
+                    <li><a href="/chat.html">Chat</a></li>
+                    <li><a href="/summary.html">Summary</a></li>
+                    <li><a href="/search.html" class="active">Search</a></li>
+                    <li><a href="/analytics.html">Analytics</a></li>
+                    <li><a href="/evaluation.html">Evaluation</a></li>
+                    <li><a href="/graph.html">Knowledge Graph</a></li>
+                    <li><a href="/about.html">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <h1>Passage Verification & Search</h1>
+
+        <div class="card">
+            <h2>Search Indexed Corpus</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+                Search matching segments directly in the vector database and BM25 index. This runs search matching without prompting the LLM.
+            </p>
+
+            <div class="form-group" style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <div style="flex: 2; min-width: 250px;">
+                    <span class="form-label">Search Query</span>
+                    <input type="text" id="search-input" class="input-field" placeholder="Enter keywords or phrases (e.g. 'cardiac arrest', 'GINA guidelines')" onkeydown="if(event.key==='Enter') executeSearch()">
+                </div>
+                <div style="flex: 1; min-width: 150px;">
+                    <span class="form-label">Search Mode</span>
+                    <select id="strategy-select" class="input-field" style="background-color: var(--bg-dark);">
+                        <option value="hybrid">Hybrid Search</option>
+                        <option value="vector">Vector (FAISS) Only</option>
+                        <option value="bm25">Keyword (BM25) Only</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group" style="display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; margin-bottom: 1.5rem;">
+                <div style="flex: 1; min-width: 200px;">
+                    <span class="form-label" id="threshold-label">Similarity Threshold: 0.60</span>
+                    <input type="range" id="threshold-input" min="0.10" max="0.95" step="0.05" value="0.60" class="input-field" style="padding: 0.2rem;" oninput="document.getElementById('threshold-label').innerText = 'Similarity Threshold: ' + this.value">
+                </div>
+                <div>
+                    <span class="form-label">Max Results</span>
+                    <input type="number" id="limit-input" min="1" max="25" value="5" class="input-field" style="width: 100px;">
+                </div>
+            </div>
+
+            <button class="btn btn-primary" onclick="executeSearch()" id="search-btn">Search Passages</button>
+            
+            <div id="loading" class="loading-indicator" style="display: none; margin-top: 1.5rem;">
+                <div class="spinner"></div>
+                <span>Executing search across index tables...</span>
+            </div>
+        </div>
+
+        <!-- Results Catalog -->
+        <div id="search-results-card" class="card" style="display: none;">
+            <div class="flex-between">
+                <h2>Matching Passage Segments</h2>
+                <span id="results-count" style="font-size: 0.9rem; color: var(--text-secondary);">Found 0 matches</span>
+            </div>
+            
+            <div id="passages-container" style="display: flex; flex-direction: column; gap: 1.5rem;">
+                <!-- Loaded dynamically -->
+            </div>
+        </div>
+    </main>
+
+    <script src="/static/js/search.js"></script>
+</body>
+</html>

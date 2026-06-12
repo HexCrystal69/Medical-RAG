@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledge Graph | Medical Research Assistant</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header>
+        <div class="nav-container">
+            <div class="logo" onclick="window.location.href='/'">
+                🩺 Medical RAG Assistant
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/">Dashboard</a></li>
+                    <li><a href="/chat.html">Chat</a></li>
+                    <li><a href="/summary.html">Summary</a></li>
+                    <li><a href="/search.html">Search</a></li>
+                    <li><a href="/analytics.html">Analytics</a></li>
+                    <li><a href="/evaluation.html">Evaluation</a></li>
+                    <li><a href="/graph.html" class="active">Knowledge Graph</a></li>
+                    <li><a href="/about.html">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="flex-between">
+            <h1>Interactive Medical Knowledge Graph</h1>
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                <label style="display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.85rem; color: #EF4444; font-weight: 600;">
+                    <input type="checkbox" id="chk-diseases" checked onchange="toggleFilter()"> Disease
+                </label>
+                <label style="display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.85rem; color: #F59E0B; font-weight: 600;">
+                    <input type="checkbox" id="chk-symptoms" checked onchange="toggleFilter()"> Symptoms
+                </label>
+                <label style="display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.85rem; color: #10B981; font-weight: 600;">
+                    <input type="checkbox" id="chk-treatments" checked onchange="toggleFilter()"> Treatments
+                </label>
+                <label style="display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.85rem; color: #3B82F6; font-weight: 600;">
+                    <input type="checkbox" id="chk-medications" checked onchange="toggleFilter()"> Medications
+                </label>
+                <label style="display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.85rem; color: #8B5CF6; font-weight: 600;">
+                    <input type="checkbox" id="chk-risks" checked onchange="toggleFilter()"> Risk Factors
+                </label>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <!-- Left side: The Graph Interactive Panel -->
+            <div class="left-col">
+                <div class="card" style="padding: 1rem; margin-bottom: 0;">
+                    <div style="margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-size: 0.85rem; color: var(--text-secondary);">
+                            Interactive force-directed graph. Drag nodes to inspect relationships.
+                        </span>
+                        <button class="btn btn-secondary" onclick="resetGraphView()" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">
+                            Reset Zoom/Pan
+                        </button>
+                    </div>
+                    <canvas id="graph-canvas"></canvas>
+                </div>
+            </div>
+
+            <!-- Right side: Text input to extract entities and insert to graph -->
+            <div class="right-col">
+                <div class="card" style="margin-bottom: 1.5rem;">
+                    <h2>Extract Entities</h2>
+                    <p style="color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.85rem;">
+                        Type a medical topic or condition to scan the vector database, extract clinical entities, and map them to the graph.
+                    </p>
+                    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                        <input type="text" id="graph-topic-input" class="input-field" placeholder="Enter topic (e.g. 'Asthma, GINA, Albuterol')" onkeydown="if(event.key==='Enter') extractToGraph()">
+                        <button class="btn btn-primary" onclick="extractToGraph()" id="graph-gen-btn">Extract & Map</button>
+                    </div>
+                    <div id="loading" class="loading-indicator" style="display: none; margin-top: 1rem;">
+                        <div class="spinner"></div>
+                        <span>Scanning literature and parsing entities...</span>
+                    </div>
+                </div>
+
+                <div class="card" style="height: calc(100% - 245px); min-height: 250px;">
+                    <h2>Selected Entity</h2>
+                    <div id="node-details" style="color: var(--text-secondary); font-size: 0.9rem;">
+                        <div style="text-align: center; color: var(--text-muted); padding-top: 3rem;">
+                            Click a node on the canvas to view detailed relationships.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="/static/js/graph.js"></script>
+</body>
+</html>

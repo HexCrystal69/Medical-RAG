@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Medical Research Assistant</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header>
+        <div class="nav-container">
+            <div class="logo" onclick="window.location.href='/'">
+                🩺 Medical RAG Assistant
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/" class="active">Dashboard</a></li>
+                    <li><a href="/chat.html">Chat</a></li>
+                    <li><a href="/summary.html">Summary</a></li>
+                    <li><a href="/search.html">Search</a></li>
+                    <li><a href="/analytics.html">Analytics</a></li>
+                    <li><a href="/evaluation.html">Evaluation</a></li>
+                    <li><a href="/graph.html">Knowledge Graph</a></li>
+                    <li><a href="/about.html">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="flex-between">
+            <h1>Document Index & Dashboard</h1>
+            <button class="btn btn-secondary" id="rebuild-btn" onclick="rebuildIndex()">🔄 Rebuild Index</button>
+        </div>
+
+        <div class="dashboard-grid">
+            <!-- Left Side: Document Uploader & List -->
+            <div class="left-col">
+                <!-- Dropzone Card -->
+                <div class="card">
+                    <h2>Upload Medical Literature</h2>
+                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+                        Index new research guidelines, clinical studies, or manuals. The system will incrementally parse and embed pages.
+                    </p>
+                    <div class="upload-dropzone" id="dropzone" onclick="document.getElementById('file-input').click()">
+                        <div style="font-size: 2.5rem; margin-bottom: 1rem;">📄</div>
+                        <p style="font-weight: 600; margin-bottom: 0.25rem;">Drag & Drop PDF or Click to Select</p>
+                        <p style="font-size: 0.8rem; color: var(--text-muted);">Maximum size: 25MB (PDF only)</p>
+                        <input type="file" id="file-input" style="display: none;" accept=".pdf" onchange="handleFileSelect(event)">
+                    </div>
+                    <div id="upload-status" style="margin-top: 1rem;"></div>
+                </div>
+
+                <!-- Document List Card -->
+                <div class="card">
+                    <h2>Indexed Medical Documents</h2>
+                    <div style="overflow-x: auto;">
+                        <table class="med-table" id="doc-table">
+                            <thead>
+                                <tr>
+                                    <th>Filename</th>
+                                    <th>Page Count</th>
+                                    <th>Indexed On</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="doc-list-body">
+                                <!-- Loaded dynamically -->
+                                <tr>
+                                    <td colspan="4" style="text-align: center; color: var(--text-muted);">Loading indexed documents...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side: Quick Stats and Actions -->
+            <div class="right-col">
+                <div class="card">
+                    <h2>Index Quick Stats</h2>
+                    <div class="stats-container" style="grid-template-columns: 1fr; gap: 1rem;">
+                        <div class="stat-box">
+                            <div class="stat-val" id="total-docs-count">0</div>
+                            <div class="stat-label">Total PDFs</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-val" id="total-pages-count">0</div>
+                            <div class="stat-label">Total Pages</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>Quick Launch Tools</h2>
+                    <p style="color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.9rem;">
+                        Select a mode to interact with your medical literature corpus:
+                    </p>
+                    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                        <button class="btn btn-primary" onclick="window.location.href='/chat.html'" style="width: 100%;">
+                            💬 Open Medical Chat
+                        </button>
+                        <button class="btn btn-secondary" onclick="window.location.href='/summary.html'" style="width: 100%;">
+                            📋 Generate Research Summary
+                        </button>
+                        <button class="btn btn-secondary" onclick="window.location.href='/search.html'" style="width: 100%;">
+                            🔍 Verify Passages & Search
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
