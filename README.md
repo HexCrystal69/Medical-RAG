@@ -156,6 +156,10 @@ The Docker container will automatically expose port `8000` and map queries to yo
 
 ---
 
+## Screenshot
+
+<img width="1919" height="998" alt="Screenshot 2026-06-12 181535" src="https://github.com/user-attachments/assets/f0d812a5-0674-4de4-9e57-39e2dd36553d" />
+
 ## 🧪 Running Automated Tests
 
 To execute the unit tests and verify hybrid retriever ranking, threshold gates, and mocks:
