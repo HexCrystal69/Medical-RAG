@@ -1,6 +1,6 @@
 # 🩺 Full Stack Medical Research Assistant
 
-A portfolio-grade, production-ready Full Stack AI Application designed to index, search, and synthesize clinical medical literature. This system combines semantic vector search and keyword query matching under an audited RAG architecture running 100% locally for patient-data privacy.
+A local full-stack medical research assistant combining semantic vector search and keyword queries with Ollama Qwen3 to answer clinical literature questions with cited references.
 
 ---
 
