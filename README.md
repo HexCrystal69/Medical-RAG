@@ -1,4 +1,4 @@
-# 🩺 Full Stack Medical Research Assistant
+# 🩺 Medical Research Assistant
 
 A local full-stack medical research assistant combining semantic vector search and keyword queries with Ollama Qwen3 to answer clinical literature questions with cited references.
 
